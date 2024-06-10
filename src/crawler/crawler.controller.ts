@@ -1,5 +1,6 @@
-import { Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, Post, Query } from "@nestjs/common";
 import { CrawlerService } from "./crawler.service";
+import { chototCrawlDto } from "./dtos/crawlProperty";
 
 
 
@@ -9,8 +10,10 @@ export class CrawlerController {
         private readonly CrawlerService: CrawlerService
     ) {}
 
-    @Get()
-    async get() {
+    @Get('/chotot')
+    async get(@Query() query: chototCrawlDto) {
+        const { page , limit } = query;
+        this.CrawlerService.crawlChotot(page, limit);
         return HttpStatus.OK
     }
 
